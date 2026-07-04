@@ -9,11 +9,11 @@ create table if not exists patients (
   updated_at timestamptz default now()
 );
 
-create table if not exists episodes (
+create table if not exists encounters (
   id uuid primary key default gen_random_uuid(),
   patient_id uuid not null references patients(id) on delete cascade,
-  episode_code text unique not null,
-  hospital_episode_id text,
+  encounter_code text unique not null,
+  hospital_encounter_id text,
   ward text,
   bed_number text,
   unit text,
@@ -28,7 +28,7 @@ create table if not exists episodes (
 
 create table if not exists documents (
   id uuid primary key default gen_random_uuid(),
-  episode_id uuid not null references episodes(id) on delete cascade,
+  encounter_id uuid not null references encounters(id) on delete cascade,
   document_type text not null,
   document_date date,
   document_time time,
@@ -81,6 +81,6 @@ create table if not exists ocr_results (
 
 create index if not exists idx_patients_internal_code on patients(internal_patient_code);
 create index if not exists idx_patients_hospital_id on patients(hospital_patient_id);
-create index if not exists idx_episodes_patient_id on episodes(patient_id);
-create index if not exists idx_documents_episode_id on documents(episode_id);
+create index if not exists idx_encounters_patient_id on encounters(patient_id);
+create index if not exists idx_documents_encounter_id on documents(encounter_id);
 create index if not exists idx_document_pages_document_id on document_pages(document_id);
