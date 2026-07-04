@@ -7,7 +7,7 @@ Round AI is a mobile-first clinical data capture system for converting paper-bas
 This alpha focuses only on:
 
 - Patient creation
-- Episode/admission creation
+- Encounter/admission creation
 - Document creation
 - Multi-page document image upload
 - Manual text entry
@@ -20,7 +20,7 @@ It deliberately does **not** include AI diagnosis, treatment recommendation, bil
 
 ```text
 Patient = the person
-Episode = one admission / visit / clinical episode
+Encounter = one admission / visit / clinical encounter
 Document = one logical clinical document
 Page = one uploaded image/page belonging to that document
 ```

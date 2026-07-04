@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 
-export default function EpisodePage({ params }: { params: Promise<{ id: string }> }) {
+export default function EncounterPage({ params }: { params: Promise<{ id: string }> }) {
   const [id, setId] = useState("");
   const [docs, setDocs] = useState<any[]>([]);
   const [text, setText] = useState("");
@@ -11,12 +11,12 @@ export default function EpisodePage({ params }: { params: Promise<{ id: string }
   useEffect(() => { params.then((p) => setId(p.id)); }, [params]);
   useEffect(() => {
     if (!id) return;
-    supabase.from("documents").select("*").eq("episode_id", id).order("created_at", { ascending: false }).then((res) => setDocs(res.data || []));
+    supabase.from("documents").select("*").eq("encounter_id", id).order("created_at", { ascending: false }).then((res) => setDocs(res.data || []));
   }, [id]);
 
   async function addDoc() {
     const { data, error } = await supabase.from("documents").insert({
-      episode_id: id,
+      encounter_id: id,
       document_type: "Progress note",
       document_date: new Date().toISOString().slice(0, 10),
       manual_text: text || null,
@@ -29,7 +29,7 @@ export default function EpisodePage({ params }: { params: Promise<{ id: string }
 
   return (
     <main style={{ padding: 24 }}>
-      <h1>Episode</h1>
+      <h1>Encounter</h1>
       <textarea value={text} onChange={(e) => setText(e.target.value)} placeholder="Manual text" rows={6} />
       <br /><br />
       <button onClick={addDoc}>Save Document</button>
